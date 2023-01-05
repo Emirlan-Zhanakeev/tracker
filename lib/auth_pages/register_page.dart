@@ -172,7 +172,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ],
               ),
-
+/*
               ///or continue with...
               const SizedBox(height: 20),
               Padding(
@@ -206,7 +206,7 @@ class _RegisterPageState extends State<RegisterPage> {
               SquareTile(
                 imagePath: 'assets/google.png',
                 onTap: () => AuthService().signInWithGoogle(),
-              ),
+              ),*/
             ],
           ),
         ),

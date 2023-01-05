@@ -173,7 +173,7 @@ class _LoginState extends State<Login> {
                   ),
                 ],
               ),
-
+/*
               ///or continue with...
               const SizedBox(height: 20),
               Padding(
@@ -210,7 +210,7 @@ class _LoginState extends State<Login> {
                 onTap: () {
                   AuthService().signInWithGoogle();
                 },
-              ),
+              ),*/
             ],
           ),
         ),
