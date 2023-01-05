@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:medicine_tracker/components/button.dart';
+import 'package:medicine_tracker/components/square_tile.dart';
+import 'package:medicine_tracker/services/auth_service.dart';
 import '../components/text_field.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -67,7 +69,6 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
-
   ///show error message popup
   void showErrorMessage(String message) {
     showDialog(
@@ -79,7 +80,6 @@ class _RegisterPageState extends State<RegisterPage> {
       },
     );
   }
-
 
   /*
   ///wrong email message popup
@@ -105,7 +105,6 @@ class _RegisterPageState extends State<RegisterPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-
               ///Head text
               const SizedBox(height: 100),
               const Text(
@@ -161,7 +160,9 @@ class _RegisterPageState extends State<RegisterPage> {
                     'Already have an account?',
                     style: TextStyle(color: Colors.grey.shade400),
                   ),
-                  const SizedBox(width: 2,),
+                  const SizedBox(
+                    width: 2,
+                  ),
                   GestureDetector(
                     onTap: widget.onTap,
                     child: const Text(
@@ -200,12 +201,11 @@ class _RegisterPageState extends State<RegisterPage> {
                   ],
                 ),
               ),
-
-              ///Google Sign in
+            ///Google Sign in
               const SizedBox(height: 20),
-              Image.asset(
-                'assets/google.png',
-                height: 72,
+              SquareTile(
+                imagePath: 'assets/google.png',
+                onTap: () => AuthService().signInWithGoogle(),
               ),
             ],
           ),

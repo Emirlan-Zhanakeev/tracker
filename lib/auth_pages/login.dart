@@ -1,12 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:medicine_tracker/components/button.dart';
+import 'package:medicine_tracker/components/square_tile.dart';
+import 'package:medicine_tracker/services/auth_service.dart';
 import '../components/text_field.dart';
 
 class Login extends StatefulWidget {
   final Function()? onTap;
 
-  const Login({Key? key, required this.onTap})
+  Login({Key? key, required this.onTap})
       : super(key: key); // changed to super key
 
   @override
@@ -203,9 +205,11 @@ class _LoginState extends State<Login> {
 
               ///Google Sign in
               const SizedBox(height: 20),
-              Image.asset(
-                'assets/google.png',
-                height: 72,
+              SquareTile(
+                imagePath: 'assets/google.png',
+                onTap: () {
+                  AuthService().signInWithGoogle();
+                },
               ),
             ],
           ),
