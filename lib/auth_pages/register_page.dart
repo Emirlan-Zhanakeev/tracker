@@ -5,7 +5,9 @@ import '../components/text_field.dart';
 
 class RegisterPage extends StatefulWidget {
   final Function()? onTap;
-  const RegisterPage({Key? key, required this.onTap}) : super(key: key);// changed to super key
+
+  const RegisterPage({Key? key, required this.onTap})
+      : super(key: key); // changed to super key
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -15,7 +17,7 @@ class _RegisterPageState extends State<RegisterPage> {
   ///text editing controllers
   final userEmailController = TextEditingController();
   final userPasswordController = TextEditingController();
-
+  final userConfirmPasswordController = TextEditingController();
 
   ///sign user up method
   void signUserUp() async {
@@ -28,17 +30,26 @@ class _RegisterPageState extends State<RegisterPage> {
         );
       },
     );
+
     ///try cresting user
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: userEmailController.text,
-        password: userPasswordController.text,
-      );
+      ///check is password is confirmed
+      if (userPasswordController.text == userConfirmPasswordController.text) {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: userEmailController.text,
+          password: userPasswordController.text,
+        );
+      } else {
+        ///show error message if password don't match
+        showErrorMessage("Password don't match");
+      }
+
       /// pop the lading circle
       Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       /// pop the lading circle
       Navigator.pop(context);
+
       ///show error message
       showErrorMessage(e.code);
 
@@ -94,6 +105,7 @@ class _RegisterPageState extends State<RegisterPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+
               ///Head text
               const SizedBox(height: 100),
               const Text(
@@ -128,7 +140,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
               const SizedBox(height: 20),
               MyTextField(
-                controller: userPasswordController,
+                controller: userConfirmPasswordController,
                 hintText: 'Confirm Password',
                 obscureText: true,
               ),
@@ -137,6 +149,7 @@ class _RegisterPageState extends State<RegisterPage> {
               const SizedBox(height: 50),
               Button(
                 onTap: signUserUp,
+                text: 'Sign Up',
               ),
 
               ///Don't have an account? Join Us

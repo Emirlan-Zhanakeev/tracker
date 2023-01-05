@@ -5,7 +5,9 @@ import '../components/text_field.dart';
 
 class Login extends StatefulWidget {
   final Function()? onTap;
-  const Login({Key? key, required this.onTap}) : super(key: key);// changed to super key
+
+  const Login({Key? key, required this.onTap})
+      : super(key: key); // changed to super key
 
   @override
   State<Login> createState() => _LoginState();
@@ -15,7 +17,6 @@ class _LoginState extends State<Login> {
   ///text editing controllers
   final userEmailController = TextEditingController();
   final userPasswordController = TextEditingController();
-
 
   ///sign user in method
   void signUserIn() async {
@@ -28,17 +29,20 @@ class _LoginState extends State<Login> {
         );
       },
     );
+
     ///try sign in
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: userEmailController.text,
         password: userPasswordController.text,
       );
+
       /// pop the lading circle
       Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       /// pop the lading circle
       Navigator.pop(context);
+
       ///show error message
       showErrorMessage(e.code);
 
@@ -56,7 +60,6 @@ class _LoginState extends State<Login> {
     }
   }
 
-
   ///show error message popup
   void showErrorMessage(String message) {
     showDialog(
@@ -68,7 +71,6 @@ class _LoginState extends State<Login> {
       },
     );
   }
-
 
   /*
   ///wrong email message popup
@@ -145,6 +147,7 @@ class _LoginState extends State<Login> {
               const SizedBox(height: 50),
               Button(
                 onTap: signUserIn,
+                text: 'Sing In',
               ),
 
               ///Don't have an account? Join Us
@@ -156,7 +159,9 @@ class _LoginState extends State<Login> {
                     'Don\'t have an account?',
                     style: TextStyle(color: Colors.grey.shade400),
                   ),
-                  const SizedBox(width: 2,),
+                  const SizedBox(
+                    width: 2,
+                  ),
                   GestureDetector(
                     onTap: widget.onTap,
                     child: const Text(
