@@ -3,22 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:medicine_tracker/components/button.dart';
 import '../components/text_field.dart';
 
-class Login extends StatefulWidget {
+class RegisterPage extends StatefulWidget {
   final Function()? onTap;
-  const Login({Key? key, required this.onTap}) : super(key: key);// changed to super key
+  const RegisterPage({Key? key, required this.onTap}) : super(key: key);// changed to super key
 
   @override
-  State<Login> createState() => _LoginState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginState extends State<Login> {
+class _RegisterPageState extends State<RegisterPage> {
   ///text editing controllers
   final userEmailController = TextEditingController();
   final userPasswordController = TextEditingController();
 
 
-  ///sign user in method
-  void signUserIn() async {
+  ///sign user up method
+  void signUserUp() async {
     ///show a loading circle
     showDialog(
       context: context,
@@ -28,7 +28,7 @@ class _LoginState extends State<Login> {
         );
       },
     );
-    ///try sign in
+    ///try cresting user
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: userEmailController.text,
@@ -126,25 +126,17 @@ class _LoginState extends State<Login> {
                 obscureText: true,
               ),
 
-              ///Forgot Password?
-              const SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      'Forgot Password?',
-                      style: TextStyle(color: Colors.grey.shade400),
-                    ),
-                  ],
-                ),
+              const SizedBox(height: 20),
+              MyTextField(
+                controller: userPasswordController,
+                hintText: 'Confirm Password',
+                obscureText: true,
               ),
 
               ///Button
               const SizedBox(height: 50),
               Button(
-                onTap: signUserIn,
+                onTap: signUserUp,
               ),
 
               ///Don't have an account? Join Us
@@ -153,14 +145,14 @@ class _LoginState extends State<Login> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Don\'t have an account?',
+                    'Already have an account?',
                     style: TextStyle(color: Colors.grey.shade400),
                   ),
                   const SizedBox(width: 2,),
                   GestureDetector(
                     onTap: widget.onTap,
                     child: const Text(
-                      'Register Now',
+                      'Login Now',
                       style: TextStyle(color: Color.fromRGBO(0, 255, 194, 100)),
                     ),
                   ),
