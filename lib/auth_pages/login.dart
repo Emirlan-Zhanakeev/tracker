@@ -4,6 +4,7 @@ import 'package:medicine_tracker/components/button.dart';
 import 'package:medicine_tracker/components/square_tile.dart';
 import 'package:medicine_tracker/services/auth_service.dart';
 import '../components/text_field.dart';
+import 'forgot_password_page.dart';
 
 class Login extends StatefulWidget {
   final Function()? onTap;
@@ -137,9 +138,21 @@ class _LoginState extends State<Login> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Text(
-                      'Forgot Password?',
-                      style: TextStyle(color: Colors.grey.shade400),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return const ForgotPasswordRage();
+                            },
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'Forgot Password?',
+                        style: TextStyle(color: Colors.grey.shade400),
+                      ),
                     ),
                   ],
                 ),
