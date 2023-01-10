@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:medicine_tracker/components/button.dart';
@@ -20,6 +21,9 @@ class _RegisterPageState extends State<RegisterPage> {
   final userEmailController = TextEditingController();
   final userPasswordController = TextEditingController();
   final userConfirmPasswordController = TextEditingController();
+  final userNameController = TextEditingController();
+  final userSurnameController = TextEditingController();
+  final userAgeController = TextEditingController();
 
   ///sign user up method
   void signUserUp() async {
@@ -33,13 +37,35 @@ class _RegisterPageState extends State<RegisterPage> {
       },
     );
 
-    ///try cresting user
+    ///try creating user
     try {
       ///check is password is confirmed
       if (userPasswordController.text == userConfirmPasswordController.text) {
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: userEmailController.text,
           password: userPasswordController.text,
+        );
+
+        ///add user details
+/*
+        final docUser = FirebaseFirestore.instance.collection('users').doc('my-id');
+
+        final json = {
+          'name' : userNameController,
+          'surname' : userSurnameController,
+          'age' : 21,
+        };
+
+        await docUser.set(json);
+*/
+        
+        addUserDetails(
+          userNameController.text.trim(),
+          userSurnameController.text.trim(),
+          userEmailController.text.trim(),
+          int.parse(
+            userAgeController.text.trim(),
+          ),
         );
       } else {
         ///show error message if password don't match
@@ -67,6 +93,17 @@ class _RegisterPageState extends State<RegisterPage> {
         wrongPasswordMessage();
       }*/
     }
+  }
+  Future addUserDetails(
+      String firstName, String lastName, String email, int age) async {
+    await FirebaseFirestore.instance.collection('users').add(
+      {
+        'first name': firstName,
+        'last name': lastName,
+        'email': email,
+        'age': age,
+      },
+    );
   }
 
   ///show error message popup
@@ -122,7 +159,31 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
 
               ///Name TextField
-              const SizedBox(height: 80),
+              const SizedBox(height: 20),
+              MyTextField(
+                controller: userNameController,
+                hintText: 'Name',
+                obscureText: false,
+              ),
+
+              ///Surname TextField
+              const SizedBox(height: 20),
+              MyTextField(
+                controller: userSurnameController,
+                hintText: 'Surname',
+                obscureText: false,
+              ),
+
+              ///age TextField
+              const SizedBox(height: 20),
+              MyTextField(
+                controller: userAgeController,
+                hintText: 'Age ',
+                obscureText: false,
+              ),
+
+              ///Email TextField
+              const SizedBox(height: 20),
               MyTextField(
                 controller: userEmailController,
                 hintText: 'Email',
