@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:medicine_tracker/read%20data/get_user_name.dart';
+import 'package:medicine_tracker/read data/get_user_name.dart';
 
 ///removing all duplicates in the list
 extension DuplicateRemoval<T> on List<T> {
@@ -40,22 +41,54 @@ class _HomePageState extends State<HomePage> {
         );
   }
 
+  final CollectionReference users =
+      FirebaseFirestore.instance.collection('users');
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Signed in as: ${user.email!}",
-          style: const TextStyle(fontSize: 16),
-        ),
-        actions: const [
-          IconButton(
-            onPressed: signUserOut,
-            icon: Icon(Icons.logout),
+        appBar: AppBar(
+          title: Text(
+            "Signed in as: ${user.email!}",
+            style: const TextStyle(fontSize: 16),
           ),
-        ],
-      ),
-      body: Column(
+          actions: const [
+            IconButton(
+              onPressed: signUserOut,
+              icon: Icon(Icons.logout),
+            ),
+          ],
+        ),
+        ///Crud operation with StreamBuilder
+        body: StreamBuilder(
+          stream: users.snapshots(),
+          builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+            if (streamSnapshot.hasData) {
+              return ListView.builder(
+                itemCount: streamSnapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  final DocumentSnapshot documentSnapshot = streamSnapshot.data!.docs[index];
+                  if (documentSnapshot['email'] == user.email) {
+
+                  }
+                  return Card(
+                    margin: const EdgeInsets.all(10),
+                    child: ListTile(
+                      title: Text(documentSnapshot['first name']),
+                      subtitle: Text(documentSnapshot['age'].toString()),
+                    ),
+                  );
+                },
+              );
+            }
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+        )
+
+        /*
+      Column(
         children: [
           Expanded(
             child: FutureBuilder(
@@ -74,6 +107,8 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-    );
+      */
+
+        );
   }
 }
