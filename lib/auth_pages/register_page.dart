@@ -62,7 +62,8 @@ class _RegisterPageState extends State<RegisterPage> {
         addUserDetails(
           userNameController.text.trim(),
           userSurnameController.text.trim(),
-          userEmailController.text.trim(),
+          userPasswordController.text.trim(),
+          // userEmailController.text.trim(),
           int.parse(
             userAgeController.text.trim(),
           ),
@@ -102,6 +103,7 @@ class _RegisterPageState extends State<RegisterPage> {
         'last name': lastName,
         'email': email,
         'age': age,
+        // 'password': password,
       },
     );
   }

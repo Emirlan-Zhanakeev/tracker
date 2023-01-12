@@ -59,6 +59,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
+
         ///Crud operation with StreamBuilder
         body: StreamBuilder(
           stream: users.snapshots(),
@@ -81,13 +82,8 @@ class _HomePageState extends State<HomePage> {
                 },
               );
             }
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          },
-        )
 
-        /*
+            /*
       Column(
         children: [
           Expanded(
@@ -108,6 +104,14 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       */
+
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+        )
+
+
 
         );
   }
