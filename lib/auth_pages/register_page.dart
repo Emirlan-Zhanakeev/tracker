@@ -5,6 +5,7 @@ import 'package:medicine_tracker/components/button.dart';
 import 'package:medicine_tracker/components/square_tile.dart';
 import 'package:medicine_tracker/services/auth_service.dart';
 import '../components/text_field.dart';
+import 'home_page.dart';
 
 class RegisterPage extends StatefulWidget {
   final Function()? onTap;
@@ -62,8 +63,8 @@ class _RegisterPageState extends State<RegisterPage> {
         addUserDetails(
           userNameController.text.trim(),
           userSurnameController.text.trim(),
-          userPasswordController.text.trim(),
-          // userEmailController.text.trim(),
+          //userPasswordController.text.trim(),
+          userEmailController.text.trim(),
           int.parse(
             userAgeController.text.trim(),
           ),
@@ -103,6 +104,7 @@ class _RegisterPageState extends State<RegisterPage> {
         'last name': lastName,
         'email': email,
         'age': age,
+        'uid' : user.uid,
         // 'password': password,
       },
     );
